@@ -1,0 +1,392 @@
+/* --- 0. Global Reset and Variables --- */
+:root {
+    /* Define a color palette for a sleek, modern look */
+    --color-dark: #0A0A0E; /* Deep almost-black background */
+    --color-light: #FFFFFF; /* Pure white text */
+    --color-accent: #0077FF; /* Vibrant electric blue for CTAs/highlights */
+    --color-secondary: #00FFC0; /* Mint green for subtle contrast */
+    --color-glass: rgba(255, 255, 255, 0.05); /* Very light, transparent white */
+    --font-family-primary: 'Inter', sans-serif;
+    --spacing-lg: 3rem;
+    --spacing-md: 1.5rem;
+    --spacing-sm: 0.75rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    line-height: 1.6;
+}
+
+/* --- Typography --- */
+h1, h2, h3 {
+    font-weight: 800; /* Extra bold for impact */
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+h1 { font-size: 4.5rem; }
+h2 { font-size: 3rem; }
+h3 { font-size: 1.75rem; }
+p { font-size: 1.15rem; }
+
+/* --- Buttons (CTAs) --- */
+.cta-button {
+    font-family: var(--font-family-primary);
+    font-weight: 600;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Primary CTA Style */
+.primary-cta, .final-cta {
+    background: var(--color-accent);
+    color: var(--color-dark); /* Contrast color */
+    box-shadow: 0 4px 20px rgba(0, 119, 255, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px); /* Subtle lift on hover */
+    box-shadow: 0 6px 30px rgba(0, 119, 255, 0.6);
+}
+
+/* --- 1. Header / Navigation --- */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    /* Frosted Glass/Blur Effect */
+    background: var(--color-glass);
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.logo {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--color-secondary); /* Use the secondary color for the brand name */
+}
+
+.nav-links a {
+    color: var(--color-light);
+    text-decoration: none;
+    margin-left: var(--spacing-lg);
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--color-accent);
+}
+
+/* --- Layout Structure --- */
+section {
+    padding: 8rem var(--spacing-lg);
+    min-height: 100vh; /* Ensures sections take up full viewport height minimum */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.section-title {
+    margin-bottom: 4rem;
+}
+
+/* --- 2. The Hero Section --- */
+.hero-section {
+    min-height: 100vh;
+    padding-top: 12rem; /* Account for the fixed header */
+    position: relative;
+    overflow: hidden;
+    /* Subtle background gradient for depth */
+    background: radial-gradient(circle at top center, rgba(16, 16, 20, 1) 0%, var(--color-dark) 70%);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.headline {
+    /* Text stroke effect for visual interest */
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-light);
+    background-image: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.sub-headline {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin: var(--spacing-md) 0 3rem 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product-visual {
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    margin-top: 5rem;
+    /* Conceptual 3D look with a large shadow/glow */
+    box-shadow: 0 20px 80px rgba(0, 119, 255, 0.1);
+    border-radius: 12px;
+}
+
+/* --- 3. Features Showcase (Scrollytelling) --- */
+.features-section {
+    min-height: auto; /* Allow content to dictate height */
+    padding-bottom: 8rem;
+}
+
+.scrolly-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Split layout */
+    gap: 4rem;
+    max-width: 1200px;
+    text-align: left;
+}
+
+.feature-text-scroll {
+    padding-right: 2rem;
+}
+
+.feature-block {
+    min-height: 70vh; /* Ensures each block is tall enough to trigger scroll actions */
+    padding: 3rem 0;
+    opacity: 0.3; /* Start faded, will be controlled by JS */
+    transition: opacity 0.5s ease;
+}
+
+.feature-block.is-active {
+    opacity: 1; /* Highlight active block */
+}
+
+.feature-visual-fixed {
+    position: sticky;
+    top: 20vh; /* Fix the visual element a bit down the screen */
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Placeholder for the product viewer container */
+    background-color: rgba(255, 255, 255, 0.05); 
+    border-radius: 12px;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.product-viewer {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+}
+
+/* --- 4. Social Proof / Trust Indicators --- */
+.trust-section {
+    min-height: 40vh;
+    padding: 4rem var(--spacing-lg);
+    background-color: #1a1a20; /* Slightly different background for visual separation */
+}
+
+.trust-section p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.logo-marquee {
+    display: flex;
+    gap: 4rem;
+    filter: grayscale(100%); /* Grayscale logos until hover */
+}
+
+.logo-marquee img {
+    height: 40px; /* Standardize logo size */
+    opacity: 0.6;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.logo-marquee img:hover {
+    opacity: 1;
+    filter: grayscale(0%); /* Full color on hover */
+}
+
+/* --- 5. Product Demonstration --- */
+.demo-section {
+    min-height: 80vh;
+}
+
+.interactive-demo-container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #1a1a20;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.demo-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.demo-tabs button {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.demo-tabs button.active {
+    color: var(--color-secondary);
+}
+
+.demo-tabs button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-accent); /* Underline for active tab */
+    border-radius: 2px 2px 0 0;
+}
+
+.demo-content-panel {
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--color-dark);
+    border-radius: 8px;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- 6. The Final CTA / Footer --- */
+.final-cta-section {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+    color: var(--color-dark);
+    padding: 6rem var(--spacing-lg);
+    min-height: auto;
+}
+
+.final-cta-section h2 {
+    color: var(--color-dark);
+}
+
+.final-cta-section p {
+    margin: 1.5rem 0 3rem 0;
+    max-width: 600px;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.final-cta {
+    /* Overriding the primary style for contrast */
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    box-shadow: none;
+    border: 2px solid var(--color-dark);
+}
+
+.final-cta:hover {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.main-footer {
+    padding: 2rem var(--spacing-lg);
+    background-color: #050507;
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    margin-left: var(--spacing-md);
+}
+
+.footer-links a:hover {
+    color: var(--color-accent);
+}
+
+/* --- Mobile Responsiveness (Basic) --- */
+@media (max-width: 768px) {
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2rem; }
+    
+    .main-header {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .nav-links {
+        display: none; /* Hide navigation on mobile for simplicity */
+    }
+    
+    .hero-section {
+        padding-top: 8rem;
+    }
+
+    .scrolly-container {
+        grid-template-columns: 1fr; /* Stack features vertically */
+    }
+
+    .feature-visual-fixed {
+        position: relative; /* Un-fix the visual on mobile */
+        height: 300px;
+        top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .feature-block {
+        min-height: auto;
+    }
+
+    .main-footer {
+        flex-direction: column;
+    }
+    
+    .footer-links {
+        margin-top: 1rem;
+    }
+}
